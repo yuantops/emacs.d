@@ -4,7 +4,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-'(package-archives
+ '(package-archives
    (quote
     (("gnu" . "http://elpa.gnu.org/packages/")
      ("melpa-stable" . "http://stable.melpa.org/packages/")))))
@@ -32,3 +32,7 @@
    (setq chinese-font-size-scale-alist '((11.5 . 1.25) (16 . 1.25))))
   (t ;; is a linux
     (setq chinese-font-size-scale-alist '((16 . 1.25)))))
+
+;; org-mode truncate line
+(add-hook 'org-mode-hook
+          (lambda () (setq truncate-lines nil)))
