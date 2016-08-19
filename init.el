@@ -20,6 +20,7 @@
 
 ;; go-mode:
 (require 'go-mode-autoloads)
+(require 'go-autocomplete)
 
 ;; markdown mode
 (autoload 'markdown-mode "markdown-mode"
@@ -58,3 +59,10 @@
 ;; org-mode: enable markdown exporter
 (eval-after-load "org"
   '(require 'ox-md nil t))
+
+;; tex support
+(setenv "PATH" (concat (getenv "PATH") ":/usr/local/texlive/2016basic/bin/universal-darwin"))
+
+;; auto-complete mode configuration
+(require 'auto-complete-config)
+(ac-config-default)
