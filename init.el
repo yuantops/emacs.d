@@ -1,4 +1,5 @@
 (require 'package)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -9,20 +10,43 @@
  '(package-archives
    (quote
     (("gnu" . "http://elpa.gnu.org/packages/")
-     ("melpa-stable" . "http://stable.melpa.org/packages/"))))
+     ("popkit" . "http://elpa.popkit.org/packages/")
+     ("marmalade" . "https://marmalade-repo.org/packages/")
+     ("melpa" . "https://melpa.org/packages/"))))
  '(truncate-lines nil))
 
-;; show line number
-(global-linum-mode t)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+;; activate packages manually before processing the init file.
+(setq package-enable-at-startup nil)
+(package-initialize)
 
 ;; add config file load path
 (add-to-list 'load-path "~/.emacs.d/src/")
 
-;; golang mode:
-;;(require 'go-mode-autoloads)
-(require 'go-autocomplete)
-;; speedbar
+;; 中文字体设置, 中英字体等宽
+;; On different platforms, I need to set different scaling rate for
+;; ;; differnt font size.
+(load "~/.emacs.d/src/bhj-fonts.el")
+(cond
+  ((and (boundp '*is-a-mac*) *is-a-mac*)
+   (setq chinese-font-size-scale-alist '((10.5 . 1.3) (11.5 . 1.3) (16 . 1.3) (18 . 1.25))))
+  ((and (boundp '*is-a-win*) *is-a-win*)
+   (setq chinese-font-size-scale-alist '((11.5 . 1.25) (16 . 1.25))))
+  (t ;; is a linux
+    (setq chinese-font-size-scale-alist '((16 . 1.25)))))
+
+;; show line number
+(global-linum-mode t)
+
+;; enable speedbar
 (speedbar 1)
+;; speedbar for go mode
 (speedbar-add-supported-extension ".go")
 (add-hook
 'go-mode-hook
@@ -57,51 +81,6 @@
     ;; Other
     (setq show-trailing-whitespace t)
     ))
-;; helper function
-(defun go ()
-    "run current buffer"
-    (interactive)
-    (compile (concat "go run " (buffer-file-name))))
-
-;; helper function
-(defun go-fmt-buffer ()
-    "run gofmt on current buffer"
-    (interactive)
-    (if buffer-read-only
-    (progn
-        (ding)
-        (message "Buffer is read only"))
-    (let ((p (line-number-at-pos))
-    (filename (buffer-file-name))
-    (old-max-mini-window-height max-mini-window-height))
-        (show-all)
-        (if (get-buffer "*Go Reformat Errors*")
-    (progn
-        (delete-windows-on "*Go Reformat Errors*")
-        (kill-buffer "*Go Reformat Errors*")))
-        (setq max-mini-window-height 1)
-        (if (= 0 (shell-command-on-region (point-min) (point-max) "gofmt" "*Go Reformat Output*" nil "*Go Reformat Errors*" t))
-    (progn
-        (erase-buffer)
-        (insert-buffer-substring "*Go Reformat Output*")
-        (goto-char (point-min))
-        (forward-line (1- p)))
-    (with-current-buffer "*Go Reformat Errors*"
-    (progn
-        (goto-char (point-min))
-        (while (re-search-forward "<standard input>" nil t)
-        (replace-match filename))
-        (goto-char (point-min))
-        (compilation-mode))))
-        (setq max-mini-window-height old-max-mini-window-height)
-        (delete-windows-on "*Go Reformat Output*")
-        (kill-buffer "*Go Reformat Output*"))))
-;; helper function
-(defun go-fix-buffer ()
-    "run gofix on current buffer"
-    (interactive)
-    (show-all)
-    (shell-command-on-region (point-min) (point-max) "go tool fix -diff"))
 
 ;; markdown mode
 (autoload 'markdown-mode "markdown-mode"
@@ -109,24 +88,6 @@
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-
-;; 中文字体设置, 中英字体等宽
-;; On different platforms, I need to set different scaling rate for
-;; ;; differnt font size.
-(load "~/.emacs.d/src/bhj-fonts.el")
-(cond
-  ((and (boundp '*is-a-mac*) *is-a-mac*)
-   (setq chinese-font-size-scale-alist '((10.5 . 1.3) (11.5 . 1.3) (16 . 1.3) (18 . 1.25))))
-  ((and (boundp '*is-a-win*) *is-a-win*)
-   (setq chinese-font-size-scale-alist '((11.5 . 1.25) (16 . 1.25))))
-  (t ;; is a linux
-    (setq chinese-font-size-scale-alist '((16 . 1.25)))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 
  ;; org-mode key bindings
  (global-set-key "\C-cl" 'org-store-link)
@@ -144,6 +105,13 @@
 ;; tex support
 (setenv "PATH" (concat (getenv "PATH") ":/usr/local/texlive/2016basic/bin/universal-darwin"))
 
-;; auto-complete mode configuration
+;; golang mode
+;; auto-complete for golang
+(require 'go-autocomplete)
 (require 'auto-complete-config)
 (ac-config-default)
+
+;; copying important environment variables from the user's shell
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
+

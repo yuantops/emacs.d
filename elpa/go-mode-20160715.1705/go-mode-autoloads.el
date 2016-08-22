@@ -3,8 +3,7 @@
 ;;; Code:
 
 
-;;;### (autoloads (go-download-play godoc gofmt-before-save go-mode)
-;;;;;;  "go-mode" "go-mode.el" (21514 38760 682820 85000))
+;;;### (autoloads nil "go-mode" "go-mode.el" (22458 51658 0 0))
 ;;; Generated autoloads from go-mode.el
 
 (autoload 'go-mode "go-mode" "\
@@ -26,14 +25,22 @@ Playground (uploading and downloading pastes).
 The following extra functions are defined:
 
 - `gofmt'
-- `godoc'
+- `godoc' and `godoc-at-point'
 - `go-import-add'
 - `go-remove-unused-imports'
+- `go-goto-arguments'
+- `go-goto-docstring'
+- `go-goto-function'
+- `go-goto-function-name'
 - `go-goto-imports'
+- `go-goto-return-values'
+- `go-goto-method-receiver'
 - `go-play-buffer' and `go-play-region'
 - `go-download-play'
 - `godef-describe' and `godef-jump'
 - `go-coverage'
+- `go-set-project'
+- `go-reset-gopath'
 
 If you want to automatically run `gofmt' before saving a file,
 add the following hook to your emacs configuration:
@@ -76,15 +83,20 @@ you save any file, kind of defeating the point of autoloading.
 \(fn)" t nil)
 
 (autoload 'godoc "go-mode" "\
-Show Go documentation for a query, much like M-x man.
+Show Go documentation for QUERY, much like M-x man.
 
 \(fn QUERY)" t nil)
 
 (autoload 'go-download-play "go-mode" "\
-Downloads a paste from the playground and inserts it in a Go
-buffer. Tries to look for a URL at point.
+Download a paste from the playground and insert it in a Go buffer.
+Tries to look for a URL at point.
 
 \(fn URL)" t nil)
+
+;;;***
+
+;;;### (autoloads nil nil ("go-mode-pkg.el") (22458 51658 270124
+;;;;;;  0))
 
 ;;;***
 
