@@ -1,117 +1,163 @@
-(require 'package)
+(add-to-list 'load-path (expand-file-name "lisp" "/Users/yuan/.emacs.d"))
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-agenda-files (quote ("~/Personal/Notes/worklog_daily_工作笔记.org")))
- '(org-startup-truncated nil)
- '(package-archives
-   (quote
-    (("gnu" . "http://elpa.gnu.org/packages/")
-     ("popkit" . "http://elpa.popkit.org/packages/")
-     ("marmalade" . "https://marmalade-repo.org/packages/")
-     ("melpa" . "https://melpa.org/packages/"))))
- '(truncate-lines nil))
+(defconst *spell-check-support-enabled* nil) ;; Enable with t if you prefer
+(defconst *is-a-mac* (eq system-type 'darwin))
 
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+;;----------------------------------------------------------------------------
+;; Bootstrap config
+;;----------------------------------------------------------------------------
+(setq custom-file (expand-file-name "custom.el" "/Users/yuan/.emacs.d"))
+;; (require 'init-compat)
+(require 'init-utils)
 
-;; activate packages manually before processing the init file.
-(setq package-enable-at-startup nil)
-(package-initialize)
+;; Needed for Emacs version < 24. must come before elpa, as it may provide package.el
+;; (require 'init-site-lisp)
 
-;; Set location for external configurations.
-(add-to-list 'load-path "~/.emacs.d/src/")
+;; Security configuration.
+;; This is commented out by default, but for security considerations
+;; I strongly recommend you to uncomment it.
+;; You may need `gnutls' library and the `certifi' python package to enable this.
+;; see the comment in `init-security.el'
+;; (require 'init-security)
 
-;; 中文字体设置, 中英字体等宽
-;; On different platforms, I need to set different scaling rate for
-;; ;; differnt font size.
-(load "~/.emacs.d/src/bhj-fonts.el")
-(cond
-  ((and (boundp '*is-a-mac*) *is-a-mac*)
-   (setq chinese-font-size-scale-alist '((10.5 . 1.3) (11.5 . 1.3) (16 . 1.3) (18 . 1.25))))
-  ((and (boundp '*is-a-win*) *is-a-win*)
-   (setq chinese-font-size-scale-alist '((11.5 . 1.25) (16 . 1.25))))
-  (t ;; is a linux
-    (setq chinese-font-size-scale-alist '((16 . 1.25)))))
+;; Machinery for installing required packages.
+;; explicitly call 'package-initialize to set up all packages installed via ELPA.
+;; should come before all package-related config files
+(require 'init-elpa)
+;;(require 'init-exec-path) ;; Set up $PATH
 
-;; show line number
-(global-linum-mode t)
+;;----------------------------------------------------------------------------
+;; Load configs for specific features and modes
+;;----------------------------------------------------------------------------
 
-;; enable speedbar
-(speedbar 1)
-;; speedbar for go mode
-(speedbar-add-supported-extension ".go")
-(add-hook
-'go-mode-hook
-'(lambda ()
-    ;; gocode
-    (auto-complete-mode 1)
-    (setq ac-sources '(ac-source-go))
-    ;; Imenu & Speedbar
-    (setq imenu-generic-expression
-        '(("type" "^type *\\([^ \t\n\r\f]*\\)" 1)
-        ("func" "^func *\\(.*\\) {" 1)))
-    (imenu-add-to-menubar "Index")
-    ;; Outline mode
-    (make-local-variable 'outline-regexp)
-    (setq outline-regexp "//\\.\\|//[^\r\n\f][^\r\n\f]\\|pack\\|func\\|impo\\|cons\\|var.\\|type\\|\t\t*....")
-    (outline-minor-mode 1)
-    (local-set-key "\M-a" 'outline-previous-visible-heading)
-    (local-set-key "\M-e" 'outline-next-visible-heading)
-    ;; Menu bar
-    (require 'easymenu)
-    (defconst go-hooked-menu
-        '("Go tools"
-        ["Go run buffer" go t]
-        ["Go reformat buffer" go-fmt-buffer t]
-        ["Go check buffer" go-fix-buffer t]))
-    (easy-menu-define
-        go-added-menu
-        (current-local-map)
-        "Go tools"
-        go-hooked-menu)
 
-    ;; Other
-    (setq show-trailing-whitespace t)
-    ))
+;; (require-package 'wgrep)
+;; (require-package 'project-local-variables)
+;; (require-package 'diminish)
+;; (require-package 'scratch)
+;; (require-package 'mwe-log-commands)
 
-;; markdown mode
-(autoload 'markdown-mode "markdown-mode"
-             "Major mode for editing Markdown files" t)
-(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+;; 中英文字体
+(require 'init-fonts)
+;; 行号, speedbar
+(require 'init-appearance)
 
- ;; org-mode key bindings
- (global-set-key "\C-cl" 'org-store-link)
- (global-set-key "\C-ca" 'org-agenda)
- (global-set-key "\C-cc" 'org-capture)
- (global-set-key "\C-cb" 'org-iswitchb)
+;; setting up the right environment variables
+(require 'init-shell-exec-path)
 
-;; org-mode: syntax highlight for src code blocks
-(setq org-src-fontify-natively t)
+(require 'init-auto-complete)
+(require 'init-go-autocomplete)
 
-;; org-mode: enable markdown exporter
-(eval-after-load "org"
-  '(require 'ox-md nil t))
+(require 'init-go-mode)
+(require 'init-org-mode)
 
-;; tex support
-(setenv "PATH" (concat (getenv "PATH") ":/usr/local/texlive/2016basic/bin/universal-darwin"))
+;; (require 'init-frame-hooks)
+;; (require 'init-xterm)
+;; (require 'init-osx-keys)
+;; (require 'init-gui-frames)
+;; (require 'init-proxies)
+;;(require 'init-dired)
+;; (require 'init-isearch)
+;; (require 'init-uniquify)
+;; (require 'init-ibuffer)
+;; (require 'init-flycheck)
 
-;; golang mode
-;; auto-complete for golang
-(require 'go-autocomplete)
-(require 'auto-complete-config)
-(ac-config-default)
+;;(require 'init-recentf)
+;;(require 'init-ido)
+;;(require 'init-yasnippet)
+;;(require 'init-hippie-expand)
 
-;; copying important environment variables from the user's shell
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize))
+;; (require 'init-windows)
+;; (require 'init-sessions)
 
+;; (require 'init-mmm)
+;;(require 'init-tabbar)
+;;(require 'init-editing-utils)
+;;(require 'init-evil)
+;;(require 'init-matlab)
+
+;; (require 'init-vc)
+;; (require 'init-darcs)
+;;(require 'init-git)
+
+;; (require 'init-crontab)
+;; (require 'init-textile)
+;;(require 'init-markdown)
+;;(require 'init-auctex)
+;; (require 'init-csv)
+;; (require 'init-erlang)
+;; (require 'init-javascript)
+;; (require 'init-php)
+;;(require 'init-org)
+;; (require 'init-nxml)
+;; (require 'init-html)
+;; (require 'init-css)
+;; (require 'init-haml)
+;; (require 'init-python-mode)
+;;(require 'init-haskell)
+;; (require 'init-ruby-mode)
+;; (require 'init-rails)
+;; (require 'init-sql)
+
+;; (require 'init-paredit)
+;; (require 'init-lisp)
+;; (require 'init-slime)
+;; (require 'init-clojure)
+;; (when (>= emacs-major-version 24)
+;;   (require 'init-clojure-cider))
+;; (require 'init-common-lisp)
+
+;; (when *spell-check-support-enabled*
+;;   (require 'init-spelling))
+
+;; (require 'init-marmalade)
+;; (require 'init-misc)
+
+;; (require 'init-dash)
+;; (require 'init-ledger)
+;; ;; Extra packages which don't require any configuration
+
+;; (require-package 'gnuplot)
+;; (require-package 'lua-mode)
+;; (require-package 'htmlize)
+;; (require-package 'dsvn)
+;; (when *is-a-mac*
+;;   (require-package 'osx-location))
+;; (require-package 'regex-tool)
+
+;;(require 'init-themes)
+;; ;;----------------------------------------------------------------------------
+;; ;; Allow access from emacsclient
+;; ;;----------------------------------------------------------------------------
+;; (require 'server)
+;; (unless (server-running-p)
+;;   (server-start))
+
+
+;;----------------------------------------------------------------------------
+;; Variables configured via the interactive 'customize' interface
+;;----------------------------------------------------------------------------
+(when (file-exists-p custom-file)
+  (load custom-file))
+
+
+;;----------------------------------------------------------------------------
+;; Allow users to provide an optional "init-local" containing personal settings
+;;----------------------------------------------------------------------------
+(when (file-exists-p (expand-file-name "init-local.el" "/Users/yuan/.emacs.d"))
+  (error "Please move init-local.el to ~/.emacs.d/lisp"))
+(require 'init-local nil t)
+
+
+;; ;;----------------------------------------------------------------------------
+;; ;; Locales (setting them earlier in this file doesn't work in X)
+;; ;;----------------------------------------------------------------------------
+;; (require 'init-locales)
+
+;; (add-hook 'after-init-hook
+;;            (lambda ()
+;;              (message "init completed in %.2fms"
+;;                       (sanityinc/time-subtract-millis after-init-time before-init-time))))
+
+
+(provide 'init)

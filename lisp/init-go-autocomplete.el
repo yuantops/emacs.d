@@ -207,5 +207,5 @@
 (add-hook 'go-mode-hook #'(lambda ()
                            (add-to-list 'ac-sources 'ac-source-go)))
 
-(provide 'go-autocomplete)
+(provide 'init-go-autocomplete)
 ;;; go-autocomplete.el ends here

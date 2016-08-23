@@ -16,7 +16,7 @@
                        )
   (setq chinese-fonts-scale (or chinese-fonts-scale 1.2))
   (save-excursion
-    (with-current-buffer (find-file-noselect "~/.emacs.d/emacs-font-size.conf")
+    (with-current-buffer (find-file-noselect "~/.emacs.d/lisp/emacs-font-size.conf")
       (delete-region (point-min) (point-max))
       (insert (format "%s" english-font-size))
       (save-buffer)
@@ -63,9 +63,9 @@ If set/leave chinese-font-size to nil, it will follow english-font-size"
 
 (qiang-set-font
  bhj-english-fonts
- (if (file-exists-p "~/.emacs.d/emacs-font-size.conf")
+ (if (file-exists-p "~/.emacs.d/lisp/emacs-font-size.conf")
      (save-excursion
-       (find-file "~/.emacs.d/emacs-font-size.conf")
+       (find-file "~/.emacs.d/lisp/emacs-font-size.conf")
        (goto-char (point-min))
        (let ((monaco-font-size (read (current-buffer))))
          (kill-buffer (current-buffer))
@@ -75,15 +75,16 @@ If set/leave chinese-font-size to nil, it will follow english-font-size"
 
 (defvar chinese-font-size-scale-alist nil)
 
+;; 中文字体设置, 中英字体等宽
 ;; On different platforms, I need to set different scaling rate for
-;; differnt font size.
+;; ;; differnt font size.
 (cond
- ((and (boundp '*is-a-mac*) *is-a-mac*)
-  (setq chinese-font-size-scale-alist '((10.5 . 1.3) (11.5 . 1.3) (16 . 1.3) (18 . 1.25))))
- ((and (boundp '*is-a-win*) *is-a-win*)
-  (setq chinese-font-size-scale-alist '((11.5 . 1.25) (16 . 1.25))))
- (t ;; is a linux:-)
-  (setq chinese-font-size-scale-alist '((16 . 1.25)))))
+  ((and (boundp '*is-a-mac*) *is-a-mac*)
+   (setq chinese-font-size-scale-alist '((10.5 . 1.3) (11.5 . 1.3) (16 . 1.3) (18 . 1.25))))
+  ((and (boundp '*is-a-win*) *is-a-win*)
+   (setq chinese-font-size-scale-alist '((11.5 . 1.25) (16 . 1.25))))
+  (t ;; is a linux
+    (setq chinese-font-size-scale-alist '((16 . 1.25)))))
 
 (defvar bhj-english-font-size-steps '(9 10.5 11.5 12.5 14 16 18 20 22))
 (defun bhj-step-frame-font-size (step)
@@ -102,6 +103,15 @@ If set/leave chinese-font-size to nil, it will follow english-font-size"
 
 (set-face-attribute 'default nil :font (font-spec))
 
+(cond
+  ((and (boundp '*is-a-mac*) *is-a-mac*)
+   (setq chinese-font-size-scale-alist '((10.5 . 1.3) (11.5 . 1.3) (16 . 1.3) (18 . 1.25))))
+  ((and (boundp '*is-a-win*) *is-a-win*)
+   (setq chinese-font-size-scale-alist '((11.5 . 1.25) (16 . 1.25))))
+  (t ;; is a linux
+   (setq chinese-font-size-scale-alist '((16 . 1.25)))))
+
+(provide 'init-fonts)
 ; {%org-mode%}
 ; here are 20 hanzi and 40 english chars, see if they are the same width
 ; 你你你你你你你你你你你你你你你你你你你你
