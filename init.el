@@ -26,7 +26,7 @@
 (setq package-enable-at-startup nil)
 (package-initialize)
 
-;; add config file load path
+;; Set location for external configurations.
 (add-to-list 'load-path "~/.emacs.d/src/")
 
 ;; 中文字体设置, 中英字体等宽
