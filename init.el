@@ -64,7 +64,7 @@
 
 ;;(require 'init-recentf)
 ;;(require 'init-ido)
-;;(require 'init-yasnippet)
+(require 'init-yasnippet)
 ;;(require 'init-hippie-expand)
 
 ;; (require 'init-windows)
