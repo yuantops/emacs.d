@@ -2,7 +2,7 @@
 # name: copyright
 # key: copyright
 # --
-#+TITLE: the title to be shown
+#+TITLE: ${0:title}
 #+AUTHOR: Yuan Yuan
-#+DATE: a date, fixed, or an Org timestamp
+#+DATE: ${1:date}
 #+EMAIL: yy102317@alibaba-inc.com
