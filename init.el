@@ -51,6 +51,8 @@
 (require 'init-go-mode)
 (require 'init-org-mode)
 
+(require 'init-copy-kbd-bindings)
+
 ;; (require 'init-frame-hooks)
 ;; (require 'init-xterm)
 ;; (require 'init-osx-keys)
