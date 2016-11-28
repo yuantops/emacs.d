@@ -40,6 +40,13 @@
  ;; (paste-to-mark arg)
   )
 
+(defun copy-paste-line (&optional arg)
+  "Save current line into Kill-Ring without mark the line "
+  (interactive "P")
+  (copy-thing 'beginning-of-line 'end-of-line arg)
+    (paste-to-mark arg)
+  )
+
 (defun copy-paragraph (&optional arg)
   "Copy paragraphes at point"
   (interactive "P")
@@ -63,7 +70,7 @@
      When used in shell-mode, it will paste string on shell prompt by default "
   (interactive "P")
   (copy-thing 'beginning-of-string 'end-of-string arg)
-;;  (paste-to-mark arg)
+     (paste-to-mark arg)
   )
 
 (defun beginning-of-parenthesis(&optional arg)
@@ -87,6 +94,7 @@
 
 (global-set-key (kbd "C-; w")         (quote copy-word))
 (global-set-key (kbd "C-; l")         (quote copy-line))
+(global-set-key (kbd "C-; h")         (quote copy-paste-line))
 (global-set-key (kbd "C-; p")         (quote copy-paragraph))
 (global-set-key (kbd "C-; s")         (quote thing-copy-string-to-mark))
 (global-set-key (kbd "C-; a")          (quote thing-copy-parenthesis-to-mark))
