@@ -1,4 +1,4 @@
-(add-to-list 'load-path (expand-file-name "lisp" "/Users/yuan/.emacs.d"))
+(add-to-list 'load-path (expand-file-name "lisp" "/home/yuan/.emacs.d"))
 
 (defconst *spell-check-support-enabled* nil) ;; Enable with t if you prefer
 (defconst *is-a-mac* (eq system-type 'darwin))
@@ -6,7 +6,7 @@
 ;;----------------------------------------------------------------------------
 ;; Bootstrap config
 ;;----------------------------------------------------------------------------
-(setq custom-file (expand-file-name "custom.el" "/Users/yuan/.emacs.d"))
+(setq custom-file (expand-file-name "custom.el" "/home/yuan/.emacs.d"))
 ;; (require 'init-compat)
 (require 'init-utils)
 
@@ -24,12 +24,10 @@
 ;; explicitly call 'package-initialize to set up all packages installed via ELPA.
 ;; should come before all package-related config files
 (require 'init-elpa)
-;;(require 'init-exec-path) ;; Set up $PATH
 
 ;;----------------------------------------------------------------------------
 ;; Load configs for specific features and modes
 ;;----------------------------------------------------------------------------
-
 
 ;; (require-package 'wgrep)
 ;; (require-package 'project-local-variables)
@@ -146,7 +144,7 @@
 ;;----------------------------------------------------------------------------
 ;; Allow users to provide an optional "init-local" containing personal settings
 ;;----------------------------------------------------------------------------
-(when (file-exists-p (expand-file-name "init-local.el" "/Users/yuan/.emacs.d"))
+(when (file-exists-p (expand-file-name "init-local.el" "/home/yuan/.emacs.d"))
   (error "Please move init-local.el to ~/.emacs.d/lisp"))
 (require 'init-local nil t)
 
