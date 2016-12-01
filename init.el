@@ -41,13 +41,14 @@
 (require 'init-appearance)
 
 ;; setting up the right environment variables
-(require 'init-shell-exec-path)
+(require 'init-shell-mode)
 
 (require 'init-auto-complete)
 (require 'init-go-autocomplete)
 
 (require 'init-go-mode)
 (require 'init-org-mode)
+(require 'init-haskell-mode)
 
 (require 'init-copy-kbd-bindings)
 
