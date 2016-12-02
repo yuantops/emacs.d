@@ -17,7 +17,6 @@
 ;;----------------------------------------------------------------------------
 ;; Load configs for specific features and modes
 ;;----------------------------------------------------------------------------
-
 ;; 中英文字体
 (require 'init-fonts)
 ;; 行号, speedbar, 断行
@@ -33,6 +32,8 @@
 (require 'init-auto-complete)
 ;; fly-check
 (require 'init-flycheck)
+;; yasnippet
+(require 'init-yasnippet)
 
 
 
