@@ -1,5 +1,8 @@
 (require-package 'go-mode)
 (require-package 'go-eldoc)
+(require-package 'go-autocomplete)
+
+(require 'auto-complete-config)
 
 (add-hook
  'go-mode-hook
