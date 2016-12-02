@@ -27,16 +27,17 @@
 ;; copy/paste快捷键
 (require 'init-copy-bindings)
 
-;; inherit exec path from shell; shell mode settings
+;; shell-mode; inherit exec path from shell
 (require 'init-shell-mode)
-
 ;; org-mode
 (require 'init-org-mode)
+;; go-mode
+(require 'init-go-mode)
 ;;(require 'init-go-autocomplete)
 ;;(require 'init-auto-complete)
 
 
-;;(require 'init-go-mode)
+
 
 ;;(require 'init-haskell-mode)
 
