@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# name: copyright
-# key: copyright
-# --
-#+TITLE: ${0:title}
-#+AUTHOR: Yuan Yuan
-#+DATE: ${1:date}
-#+EMAIL: yy102317@alibaba-inc.com

@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: caption
-# key: caption
-# --
-
-#+CAPTION: This is the caption for the next table (or link)
-#+NAME: tbl:basic-data
