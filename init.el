@@ -30,11 +30,14 @@
 ;; inherit exec path from shell; shell mode settings
 (require 'init-shell-mode)
 
-;;(require 'init-auto-complete)
+;; org-mode
+(require 'init-org-mode)
 ;;(require 'init-go-autocomplete)
+;;(require 'init-auto-complete)
+
 
 ;;(require 'init-go-mode)
-;;(require 'init-org-mode)
+
 ;;(require 'init-haskell-mode)
 
 ;;(require 'init-copy-kbd-bindings)
