@@ -27,6 +27,11 @@
 ;; copy/paste快捷键
 (require 'init-copy-bindings)
 
+;; auto-complete
+(require 'init-auto-complete)
+
+
+
 ;; shell-mode; inherit exec path from shell
 (require 'init-shell-mode)
 ;; org-mode
@@ -34,7 +39,7 @@
 ;; go-mode
 (require 'init-go-mode)
 ;;(require 'init-go-autocomplete)
-;;(require 'init-auto-complete)
+
 
 
 
