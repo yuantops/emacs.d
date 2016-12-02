@@ -1,10 +1,3 @@
-(require-package 'exec-path-from-shell)
-
-;; copying important environment variables from the user's shell
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize))
-
-
 ;; Shell mode settings 
 (custom-set-variables
  '(comint-scroll-to-bottom-on-input t)  ; always insert at the bottom

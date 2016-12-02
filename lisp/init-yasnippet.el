@@ -7,6 +7,11 @@
 
 (yas-global-mode t)
 
+;;
+;;注意，snippet的位置在lisp/init-local.el中设置
+;;
+
+
 (provide 'init-yasnippet)
 
 

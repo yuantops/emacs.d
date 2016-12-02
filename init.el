@@ -25,7 +25,8 @@
 (require 'init-windows)
 ;; copy/paste快捷键
 (require 'init-copy-bindings)
-
+;; 环境变量
+(require 'init-exec-path)
 
 
 ;; auto-complete
@@ -36,20 +37,16 @@
 (require 'init-yasnippet)
 
 
-
-;; shell-mode; inherit exec path from shell
+;; shell-mode
 (require 'init-shell-mode)
 ;; org-mode
 (require 'init-org-mode)
 ;; go-mode
 (require 'init-go-mode)
+;; haskell-mode
+(require 'init-haskell-mode)
 
 
-
-
-
-
-;;(require 'init-haskell-mode)
 
 ;;(require 'init-copy-kbd-bindings)
 
