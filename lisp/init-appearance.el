@@ -2,7 +2,7 @@
 (global-linum-mode t)
 
 ;; enable speedbar
-;;(speedbar 1)
+(speedbar 1)
 
 ;; wrap lines if too long
 (setq-default truncate-lines nil)

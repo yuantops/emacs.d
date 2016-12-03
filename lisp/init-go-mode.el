@@ -17,10 +17,10 @@
     (local-set-key (kbd "M-.") 'pop-tag-mark)
 
     ;; gocode
-    (Auto-complete-mode 1)
+    (auto-complete-mode 1)
     (setq ac-sources '(ac-source-go))
     
-    ;; Imenu & Speedbar
+    ;; Imenu 
     (setq imenu-generic-expression
 	  '(("type" "^type *\\([^ \t\n\r\f]*\\)" 1)
 	    ("func" "^func *\\(.*\\) {" 1)))
@@ -47,7 +47,7 @@
       go-hooked-menu)
 
 
-    ;; speedbar for go mode
+    ;; speedbar
     (speedbar-add-supported-extension ".go")
 
     
