@@ -29,8 +29,8 @@
 (require 'init-exec-path)
 
 
-;; auto-complete
-(require 'init-auto-complete)
+;; company(自动补齐)
+(require 'init-company)
 ;; fly-check
 (require 'init-flycheck)
 ;; yasnippet
@@ -45,8 +45,10 @@
 (require 'init-go-mode)
 ;; haskell-mode
 (require 'init-haskell-mode)
-
-
+;; python-mode
+(require 'init-python-mode)
+;; markdown-mode
+(require 'init-markdown)
 
 ;;(require 'init-copy-kbd-bindings)
 

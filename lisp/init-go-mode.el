@@ -1,24 +1,22 @@
 (require-package 'go-mode)
 (require-package 'go-eldoc)
-(require-package 'go-autocomplete)
-
-(require 'auto-complete-config)
+(require-package 'company-go)
 
 (add-hook
  'go-mode-hook
  '(lambda ()
 
-    ;; Call Gofmt before saving                                                    
+    ;; Call Gofmt before saving  
     (add-hook 'before-save-hook 'gofmt-before-save)
     ;; Add golang doc support
     (go-eldoc-setup)
-    ;; Godef jump key binding                                                      
+    ;; Godef jump key binding
     (local-set-key (kbd "M-,") 'godef-jump)
     (local-set-key (kbd "M-.") 'pop-tag-mark)
 
-    ;; gocode
-    (auto-complete-mode 1)
-    (setq ac-sources '(ac-source-go))
+    ;;autocomplete
+    (set (make-local-variable 'company-backends) '(company-go))
+    (company-mode)
     
     ;; Imenu 
     (setq imenu-generic-expression
