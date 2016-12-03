@@ -35,6 +35,8 @@
 (require 'init-flycheck)
 ;; yasnippet
 (require 'init-yasnippet)
+;; magit
+(require 'init-magit)
 
 
 ;; shell-mode
