@@ -27,8 +27,10 @@
 (require 'init-copy-bindings)
 ;; 环境变量
 (require 'init-exec-path)
+;; ido配置
+(require 'init-ido)
 ;; smex 输入命令更快
-(require 'init-smex.el)
+(require 'init-smex)
 
 ;; company(自动补齐)
 (require 'init-company)
