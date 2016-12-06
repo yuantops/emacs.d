@@ -14,6 +14,11 @@
     (local-set-key (kbd "M-,") 'godef-jump)
     (local-set-key (kbd "M-.") 'pop-tag-mark)
 
+    ;; Customize compile command to run go build
+    (if (not (string-match "go" compile-command))
+	(set (make-local-variable 'compile-command)
+	     "go build -v && go test -v && go vet"))
+
     ;;autocomplete
     (set (make-local-variable 'company-backends) '(company-go))
     (company-mode)
