@@ -50,7 +50,7 @@
 
 
 (defvar bhj-english-fonts '("Monaco" "Consolas" "DejaVu Sans Mono" "Monospace" "Courier New"))
-(defvar bhj-chinese-fonts '("Noto Sans CJK SC Regular","Microsoft Yahei" "Microsoft_Yahei" "微软雅黑" "文泉驿等宽微米黑" "黑体" "新宋体" "宋体"))
+(defvar bhj-chinese-fonts '("Noto Sans CJK SC Regular" "Microsoft Yahei" "Microsoft_Yahei" "微软雅黑" "文泉驿等宽微米黑" "黑体" "新宋体" "宋体"))
 (qiang-set-font bhj-english-fonts 12.5 bhj-chinese-fonts 1.3)
 
 (set-face-attribute 'default nil :font (font-spec))
