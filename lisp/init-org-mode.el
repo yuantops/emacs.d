@@ -20,4 +20,10 @@
 (add-hook 'org-mode-hook 
 	  (lambda () (setq truncate-lines nil)))
 
+(org-babel-do-load-languages
+      'org-babel-load-languages
+      '((python . t)
+        (R . t)
+	(sh . t)))
+
 (provide 'init-org-mode)
