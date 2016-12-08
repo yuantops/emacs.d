@@ -53,6 +53,8 @@
     ;; speedbar
     (speedbar-add-supported-extension ".go")
 
+    ;; Set GOPATH
+    (setenv "GOPATH" "/Users/yuan/Projects/golang")
     
     ;; Other
     (setq show-trailing-whitespace t)

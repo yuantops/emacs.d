@@ -25,7 +25,7 @@
 (require 'init-windows)
 ;; copy/paste快捷键
 (require 'init-copy-bindings)
-;; 环境变量
+;; command path
 (require 'init-exec-path)
 ;; ido配置
 (require 'init-ido)
