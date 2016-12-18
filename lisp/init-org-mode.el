@@ -18,7 +18,9 @@
 
 ;; prevent truncating lines
 (add-hook 'org-mode-hook 
-	  (lambda () (setq truncate-lines nil)))
+	  (lambda () (setq truncate-lines nil)
+	    (local-set-key "\C-c0" 'org-time-stamp-inactive)
+	    ))
 
 (org-babel-do-load-languages
       'org-babel-load-languages
