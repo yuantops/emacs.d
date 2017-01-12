@@ -1,59 +1,64 @@
-(defun qiang-font-existsp (font)
-  (if (null (x-list-fonts font))
-      nil t))
+(defun font-exist-p (fontname)
+  "Test if this font is exist or not."
+  (if (or (not fontname) (string= fontname ""))
+      nil
+    (if (not (x-list-fonts fontname)) nil t)))
 
-(defun qiang-make-font-string (font-name font-size)
-  (if (and (stringp font-size)
-           (equal ":" (string (elt font-size 0))))
-      (format "%s%s" font-name font-size)
-    (format "%s-%s" font-name font-size)))
+(defun set-font (english chinese size-pair)
+  "Setup emacs English and Chinese font on x window-system."
 
-(defun qiang-set-font (english-fonts
-                       english-font-size
-                       chinese-fonts
-                       chinese-fonts-scale
-                       )
-  
-  (setq face-font-rescale-alist `(("Noto Sans CJK SC Regular" . ,chinese-fonts-scale)
-                                  ("Microsoft_Yahei" . ,chinese-fonts-scale)
-                                  ("微软雅黑" . ,chinese-fonts-scale)
-                                  ("WenQuanYi Zen Hei" . ,chinese-fonts-scale)))
-  
-  (require 'cl)                         ; for find if
-  (let ((en-font (qiang-make-font-string
-                  (find-if #'qiang-font-existsp english-fonts)
-                  english-font-size))
-        (zh-font (font-spec :family (find-if #'qiang-font-existsp chinese-fonts))))
+  (if (font-exist-p english)
+      (set-frame-font (format "%s:pixelsize=%d" english (car size-pair)) t))
 
-    ;; Set the default English font
-    ;;
-    ;; The following 2 method cannot make the font settig work in new frames.
-    ;; (set-default-font "Consolas:pixelsize=18")
-    ;; (add-to-list 'default-frame-alist '(font . "Consolas:pixelsize=18"))
-    ;; We have to use set-face-attribute
-    (set-face-attribute
-     'default nil :font en-font)
-    (condition-case font-error
-        (progn
-          (set-face-font 'italic (font-spec :family "Courier New" :slant 'italic :weight 'normal :size (+ 0.0 english-font-size)))
-          (set-face-font 'bold-italic (font-spec :family "Courier New" :slant 'italic :weight 'bold :size (+ 0.0 english-font-size)))
+  (if (font-exist-p chinese)
+      (dolist (charset '(kana han symbol cjk-misc bopomofo))
+        (set-fontset-font (frame-parameter nil 'font) charset
+                          (font-spec :family chinese :size (cdr size-pair))))))
 
-          (set-fontset-font t 'symbol (font-spec :family "Courier New")))
-      (error nil))
-    (set-fontset-font t 'symbol (font-spec :family "Unifont") nil 'append)
-    (set-fontset-font t nil (font-spec :family "DejaVu Sans"))
+(defun set-font-from-list (en-fonts chn-fonts size-pair)
+  "Pick up first existing font from candidate list and set up."
 
-    ;; Set Chinese font
-    ;; Do not use 'unicode charset, it will cause the english font setting invalid
-    (dolist (charset '(kana han cjk-misc bopomofo))
-      (set-fontset-font t charset zh-font))))
+  (require 'cl) ; for find if
+  (let ((en-font (find-if #'font-exist-p en-fonts))
+	(zh-font (find-if #'font-exist-p chn-fonts)))
+    (message "Set chn font: %s, en font: %s" zh-font en-font)
+    (set-font en-font zh-font size-pair)    
+    ))
 
+(defvar en-font-list '("Monaco" "Consolas" "DejaVu Sans Mono" "Monospace" "Courier New"))
+(defvar chn-font-list '("Noto Sans CJK SC Regular" "Microsoft Yahei" "Microsoft_Yahei" "微软雅黑" "文泉驿等宽微米黑" "黑体" "新宋体" "宋体"))
+(defvar emacs-font-size-pair '(15 . 18)
+  "Default font size pair for (english . chinese)")
 
-(defvar bhj-english-fonts '("Monaco" "Consolas" "DejaVu Sans Mono" "Monospace" "Courier New"))
-(defvar bhj-chinese-fonts '("Noto Sans CJK SC Regular" "Microsoft Yahei" "Microsoft_Yahei" "微软雅黑" "文泉驿等宽微米黑" "黑体" "新宋体" "宋体"))
-(qiang-set-font bhj-english-fonts 12.5 bhj-chinese-fonts 1.3)
+(defvar emacs-font-size-pair-list
+  '(( 5 .  6) (10 . 12)
+    (13 . 16) (15 . 18) (17 . 20)
+    (19 . 22) (20 . 24) (21 . 26)
+    (24 . 28) (26 . 32) (28 . 34)
+    (30 . 36) (34 . 40) (36 . 44))
+  "This list is used to store matching (englis . chinese) font-size.")
 
-(set-face-attribute 'default nil :font (font-spec))
+(defun emacs-step-font-size (step)
+  "Increase/Decrease emacs's font size."
+  (let ((scale-steps emacs-font-size-pair-list))
+    (if (< step 0) (setq scale-steps (reverse scale-steps)))
+    (setq emacs-font-size-pair
+          (or (cadr (member emacs-font-size-pair scale-steps))
+              emacs-font-size-pair))
+    (when emacs-font-size-pair
+      (message "emacs font size set to %.1f" (car emacs-font-size-pair))
+      (set-font-from-list en-font-list chn-font-list emacs-font-size-pair))))
+
+(defun increase-emacs-font-size ()
+  "Decrease emacs's font-size acording emacs-font-size-pair-list."
+  (interactive) (emacs-step-font-size 1))
+
+(defun decrease-emacs-font-size ()
+  "Increase emacs's font-size acording emacs-font-size-pair-list."
+  (interactive) (emacs-step-font-size -1))
+
+;; Setup font size based on emacs-font-size-pair
+(set-font-from-list en-font-list chn-font-list emacs-font-size-pair )
 
 (provide 'init-fonts)
 					; {%org-mode%}
