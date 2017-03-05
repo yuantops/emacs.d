@@ -31,6 +31,8 @@
 (require 'init-ido)
 ;; smex 输入命令更快
 (require 'init-smex)
+;; 配色方案
+(require 'init-themes)
 
 ;; company(自动补齐)
 (require 'init-company)
@@ -54,6 +56,8 @@
 (require 'init-python-mode)
 ;; markdown-mode
 (require 'init-markdown)
+;; tramp-mode
+(require 'init-tramp)
 
 ;;(require 'init-copy-kbd-bindings)
 
