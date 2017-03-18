@@ -2,5 +2,7 @@
   (add-hook 'after-init-hook 'global-flycheck-mode)
   (setq flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list))
 
+;; bash linting
+(add-hook 'sh-mode-hook 'flycheck-mode)
 
 (provide 'init-flycheck)
