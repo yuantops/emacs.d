@@ -1,6 +1,10 @@
 (require-package 'go-mode)
 (require-package 'go-eldoc)
 (require-package 'company-go)
+(require-package 'flycheck-gometalinter)
+
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook #'flycheck-gometalinter-setup))
 
 (add-hook
  'go-mode-hook
@@ -22,6 +26,15 @@
     ;;autocomplete
     (set (make-local-variable 'company-backends) '(company-go))
     (company-mode)
+
+    ;; linters
+    (flycheck-mode 1)
+    ;; skips 'vendor' directories and sets GO15VENDOREXPERIMENT=1
+    (setq flycheck-gometalinter-vendor t)
+    ;; only run fast linters
+    ;;   (setq flycheck-gometalinter-fast t)
+    ;; use in tests files
+    (setq flycheck-gometalinter-test t)
     
     ;; Imenu 
     (setq imenu-generic-expression
