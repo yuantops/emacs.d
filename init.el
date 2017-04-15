@@ -56,6 +56,8 @@
 (require 'init-python-mode)
 ;; markdown-mode
 (require 'init-markdown)
+;; latex-mode
+(require 'init-auctex)
 ;; tramp-mode
 (require 'init-tramp)
 
