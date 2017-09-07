@@ -5,14 +5,19 @@
 
 ;; Capture templates for: TODO tasks, Notes, Journals
 (setq org-capture-templates
-      (quote (("t" "todo" entry (file "~/notes/task.org")
+      (quote (("i" "idea" entry (file "~/notes/idea.org")
+               "* %? :NEW:\n%U\n%a\n\n" )
+	      ("t" "todo" entry (file "~/notes/todo.org")
                "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
-              ("n" "note" entry (file "~/notes/idea.org")
-               "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
               ("j" "journal" entry (file+datetree "~/notes/journal.org")
                "* %?\n%U\n" :clock-in t :clock-resume t))
 	     )
       )
+(setq org-agenda-files
+      '("~/notes/task.org" "~/notes/idea.org" "~/notes/journal.org"))
+(setq org-refile-targets
+      '((nil :maxlevel . 3)
+        (org-agenda-files :maxlevel . 3)))
 
 ;;=============================================
 ;; yasnippet dirs
