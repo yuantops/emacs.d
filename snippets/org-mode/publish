@@ -4,5 +4,6 @@
 # --
 
 #+OPTIONS: toc:4
+#+OPTIONS: ^:nil
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" media="all" href="/Users/yuan/.emacs.d/org-style/org.css" />
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" media="print" href="/Users/yuan/.emacs.d/org-style/org-print.css" />

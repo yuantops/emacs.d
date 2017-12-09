@@ -109,12 +109,23 @@ tt {
 .verbatim {
     margin: .5em 0;
 }
+
+/*
+* 引用自动换行
+*/
 pre {
     border: 1px solid #ccc;
     background: #eee;
     padding: .5em;
     overflow: auto;
+
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
+
 .verbatim pre {
     margin: 0;
 }
