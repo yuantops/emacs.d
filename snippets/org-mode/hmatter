@@ -1,0 +1,12 @@
+# key: hmatter
+# name: hugo-blog-matter
+# --
+#+BEGIN_SRC xxx
++++
+title = "`(cdr (assoc "ITEM" (org-entry-properties)))`"
+date = "`(format-time-string "%Y-%m-%dT%H:%M:%S")`Z"
+Categories = ["Tech"]
+Tags = [""]
+Description = ""
++++
+#+END_SRC

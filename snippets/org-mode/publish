@@ -7,3 +7,8 @@
 #+OPTIONS: ^:nil
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" media="all" href="/Users/yuan/.emacs.d/org-style/org.css" />
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" media="print" href="/Users/yuan/.emacs.d/org-style/org-print.css" />
+#+PANDOC_OPTIONS: toc-depth:4
+#+PANDOC_OPTIONS: toc:t
+#+PANDOC_OPTIONS: pdf-engine:xelatex
+#+PANDOC_OPTIONS: "variable:CJKmainfont:Noto Sans CJK SC"
+

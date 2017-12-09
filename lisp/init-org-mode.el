@@ -10,11 +10,15 @@
 ;;
 
 ;; org-mode: syntax highlight for src code blocks
-(setq org-src-fontify-natively t)
+;;(setq org-src-fontify-natively t)
+
+;; org-mode: enable pandoc as export engine
+(with-eval-after-load 'ox
+  (require 'ox-pandoc))
 
 ;; org-mode: enable markdown exporter
-(eval-after-load "org"
-  '(require 'ox-md nil t))
+;;(eval-after-load "org"
+;;  '(require 'ox-md nil t))
 
 ;; prevent truncating lines
 (add-hook 'org-mode-hook 
