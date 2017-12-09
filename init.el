@@ -60,6 +60,8 @@
 (require 'init-auctex)
 ;; tramp-mode
 (require 'init-tramp)
+;; c-mode
+(require 'init-c-mode)
 
 ;;(require 'init-copy-kbd-bindings)
 

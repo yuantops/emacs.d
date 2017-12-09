@@ -9,7 +9,7 @@
  )
 
 ; interpret and use ansi color codes in shell output windows
-(ansi-color-for-comint-mode-on)
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ; make completion buffers disappear after 3 seconds.
 (add-hook 'completion-setup-hook
@@ -18,5 +18,7 @@
 
 ;; make the prompt read only
 (setq comint-prompt-read-only t)
+;;(add-to-list 'comint-dynamic-complete-functions 'icicle-shell-dynamic-complete-filename)
+;;(add-to-list 'comint-dynamic-complete-functions 'icicle-shell-dynamic-complete-command)
 
 (provide 'init-shell-mode)
