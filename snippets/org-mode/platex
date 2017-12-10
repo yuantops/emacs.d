@@ -1,0 +1,5 @@
+# key: platex
+# name: pandoc-latex-header
+# --
+#+PANDOC_OPTIONS: listings:t
+#+PANDOC_OPTIONS: include-in-header:~/.emacs.d/org-style/list-settings.tex
